@@ -5,7 +5,8 @@ Original code came from updated version of source code from http://dranger.com/f
 However, I could not get it to compile or work on my version of ffmpeg. Some changes were required. 
 
 Here is the version of ffmpeg I am using and the compiler flags used to build it.
-I replaced my true home directory with "my-home-directory." 
+I replaced my true home directory with "my-home-directory."
+
 
 ```
 
@@ -23,4 +24,19 @@ ffmpeg version N-78176-gb340bd8 Copyright (c) 2000-2016 the FFmpeg developers
 
 ```
 
-I am gradually changing it so all the lessons compile and work with this version of ffmpeg. There are still a number of compiler warnings about the use of depreciated functions.
+I am gradually changing it so all the lessons can compile and work with this version of ffmpeg. There are still a number of compiler warnings about the use of depreciated functions. The Makefile is still a bit primitive. You will have to change it by hand to compiler each lesson. I believe I have fixed only lessons 1-3. Lesson 1 works when used on an mpg video file. 
+
+To get things to compile, using the present Makefile, you will also have to change the PKG_CONFIG_PATH, so that pkg-config will be able to find the *.pc files that come with the ffmpeg build. They are found in the lib subdirectory. First check it by:
+
+```
+env | grep PKG_CONFIG_PATH
+
+```
+If a path to /home/my-home-directory/ffmpeg_build/lib/pkgconfig does not appear then you need to add it as follows:
+
+```
+export PKG_CONFIG_PATH=/home/my-home-directory/ffmpeg_build/lib/pkgconfig:$PKG_CONFIG_PATH
+
+```
+
+Now the Makefile should work provided you installed everything as above and built the right version of ffmpeg. I decided to do things this way since ffmpeg is a fast moving project and I have on my system several versions of it. This particular version uses SDL1.2. Several versions latter from the above one, ffmpeg switched over to SDL2. 
