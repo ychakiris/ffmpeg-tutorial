@@ -8,6 +8,7 @@ Here is the version of ffmpeg I am using and the compiler flags used to build it
 I replaced my true home directory with "my-home-directory." 
 
 ...
+
 ffmpeg version N-78176-gb340bd8 Copyright (c) 2000-2016 the FFmpeg developers
   built with gcc 4.8 (Ubuntu 4.8.4-2ubuntu1~14.04)
   configuration: --prefix=/home/my-home-directory/ffmpeg_build --pkg-config-flags=--static --extra-cflags=-I/home/my-home-directory/ffmpeg_build/include --extra-ldflags=-L/home/my-home-directory/ffmpeg_build/lib --bindir=/home/my-home-directory/bin --enable-gpl --enable-libass --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-nonfree
