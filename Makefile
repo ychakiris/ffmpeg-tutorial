@@ -7,22 +7,22 @@ FFMPEG_LIBS=    libavdevice                        \
                 libswscale                         \
                 libavutil                          \
 
-CFLAGS += -Wall -O2 -g
-CFLAGS := $(shell /usr/local/bin/pkg-config --cflags $(FFMPEG_LIBS)) $(CFLAGS)
-CFLAGS := $(shell /usr/X11/bin/freetype-config --cflags) $(CFLAGS)
-CFLAGS := $(shell /usr/local/bin/sdl-config --cflags) $(CFLAGS)
+CFLAGS += -Wall -O2 -g -ggdb
+CFLAGS := $(shell pkg-config --cflags $(FFMPEG_LIBS)) $(CFLAGS)
+CFLAGS := $(shell freetype-config --cflags) $(CFLAGS)
+CFLAGS := $(shell sdl-config --cflags) $(CFLAGS)
 
-LDLIBS := $(shell /usr/local/bin/pkg-config --libs $(FFMPEG_LIBS)) $(LDLIBS)
-LDLIBS := $(shell /usr/X11/bin/freetype-config --libs) $(LDLIBS)
-LDLIBS := $(shell /usr/local/bin/sdl-config --libs) $(LDLIBS)
+LDLIBS := $(shell pkg-config --libs $(FFMPEG_LIBS)) $(LDLIBS)
+LDLIBS := $(shell freetype-config --libs) $(LDLIBS)
+LDLIBS := $(shell sdl-config --libs) $(LDLIBS)
 
 EXAMPLES=       tutorial01                         \
-                tutorial02                         \
-                tutorial03                         \
-                tutorial04                         \
-                tutorial05                         \
-                tutorial06                         \
-                tutorial07
+#                tutorial02                         \
+#                tutorial03                         \
+#                tutorial04                         \
+#                tutorial05                         \
+#                tutorial06                         \
+#                tutorial07
 
 OBJS=$(addsuffix .o,$(EXAMPLES))
 
