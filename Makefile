@@ -1,4 +1,5 @@
 # use pkg-config for getting CFLAGS and LDLIBS
+FFMPEG_PKG_CONFIG= $(shell echo $(HOME)/ffmpeg_build/lib/pkgconfig):$(shell echo $(PKG_CONFIG_PATH))
 FFMPEG_LIBS=    libavdevice                        \
                 libavformat                        \
                 libavfilter                        \
@@ -8,11 +9,11 @@ FFMPEG_LIBS=    libavdevice                        \
                 libavutil                          \
 
 CFLAGS += -Wall -O2 -g -ggdb
-CFLAGS := $(shell pkg-config --cflags $(FFMPEG_LIBS)) $(CFLAGS)
+CFLAGS := $(shell export PKG_CONFIG_PATH=$(FFMPEG_PKG_CONFIG); pkg-config --cflags $(FFMPEG_LIBS)) $(CFLAGS)
 CFLAGS := $(shell freetype-config --cflags) $(CFLAGS)
 CFLAGS := $(shell sdl-config --cflags) $(CFLAGS)
 
-LDLIBS := $(shell pkg-config --libs $(FFMPEG_LIBS)) $(LDLIBS)
+LDLIBS := $(shell export PKG_CONFIG_PATH=$(FFMPEG_PKG_CONFIG); pkg-config --libs $(FFMPEG_LIBS)) $(LDLIBS)
 LDLIBS := $(shell freetype-config --libs) $(LDLIBS)
 LDLIBS := $(shell sdl-config --libs) $(LDLIBS)
 
