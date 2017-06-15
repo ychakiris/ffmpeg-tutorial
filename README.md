@@ -26,16 +26,27 @@ ffmpeg version N-78176-gb340bd8 Copyright (c) 2000-2016 the FFmpeg developers
 
 I am gradually changing it so all the lessons can compile and work with this version of ffmpeg. There are still a number of compiler warnings about the use of depreciated functions. The Makefile is still a bit primitive. You will have to change it by hand to compiler each lesson. I believe I have fixed only lessons 1-3. Lesson 1 works when used on an mpg video file. 
 
-To get things to compile, using the present Makefile, you will also have to change the PKG_CONFIG_PATH, so that pkg-config will be able to find the *.pc files that come with the ffmpeg build. They are found in the lib subdirectory. First check it by:
+The `--cflags` and `--libs` options are set using the following code in the Makefile:
 
 ```
-env | grep PKG_CONFIG_PATH
+# use pkg-config for getting CFLAGS and LDLIBS
+FFMPEG_PKG_CONFIG= $(shell echo $(HOME)/ffmpeg_build/lib/pkgconfig):$(shell echo $(PKG_CONFIG_PATH))
+FFMPEG_LIBS=    libavdevice                        \
+                libavformat                        \
+                libavfilter                        \
+                libavcodec                         \
+                libswresample                      \
+                libswscale                         \
+                libavutil                          \
 
-```
-If a path to /home/my-home-directory/ffmpeg_build/lib/pkgconfig does not appear then you need to add it as follows:
+CFLAGS += -Wall -O2 -g -ggdb
+CFLAGS := $(shell export PKG_CONFIG_PATH=$(FFMPEG_PKG_CONFIG); pkg-config --cflags $(FFMPEG_LIBS)) $(CFLAGS)
+CFLAGS := $(shell freetype-config --cflags) $(CFLAGS)
+CFLAGS := $(shell sdl-config --cflags) $(CFLAGS)
 
-```
-export PKG_CONFIG_PATH=/home/my-home-directory/ffmpeg_build/lib/pkgconfig:$PKG_CONFIG_PATH
+LDLIBS := $(shell export PKG_CONFIG_PATH=$(FFMPEG_PKG_CONFIG); pkg-config --libs $(FFMPEG_LIBS)) $(LDLIBS)
+LDLIBS := $(shell freetype-config --libs) $(LDLIBS)
+LDLIBS := $(shell sdl-config --libs) $(LDLIBS)
 
 ```
 

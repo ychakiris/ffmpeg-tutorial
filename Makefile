@@ -17,7 +17,7 @@ LDLIBS := $(shell export PKG_CONFIG_PATH=$(FFMPEG_PKG_CONFIG); pkg-config --libs
 LDLIBS := $(shell freetype-config --libs) $(LDLIBS)
 LDLIBS := $(shell sdl-config --libs) $(LDLIBS)
 
-EXAMPLES=       tutorial01                         \
+EXAMPLES=        tutorial01                         \
 #                tutorial02                         \
 #                tutorial03                         \
 #                tutorial04                         \

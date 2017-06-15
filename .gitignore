@@ -10,3 +10,10 @@
 *.lai
 *.la
 *.a
+
+
+# Executable files
+tutorial01
+
+# Sample output
+*.ppm
