@@ -55,4 +55,4 @@ Now the Makefile should work provided you installed everything as above and buil
 Additional Notes 
 ======================
 
-I have been working further on this tutorial but the modifications are found in my cl-autowrap repository in the `t-ffmpeg/tutoral` subdirectory. There I am updating the tutorial for now using a more recent version of ffmpeg. The version of ffmpeg I am using is in the subdirectory and I build it so all the libraries and include files are in the `t-ffmpeg/` tree. 
+I have been working further on this tutorial but the modifications are found in my cl-autowrap repository in the `t-ffmpeg/tutorial` subdirectory. There I am updating the tutorial for now using a more recent version of ffmpeg. The version of ffmpeg I am using is in the subdirectory and I build it so all the libraries and include files are in the `t-ffmpeg/` tree. 

@@ -24,6 +24,9 @@
 #include <libswscale/swscale.h>
 #include <stdio.h>
 
+#define MAX_NUMBER_FRAMES 10
+#define PRINT_DEBUG_MESSAGES 1
+
 void SaveFrame(AVFrame *pFrame, int width, int height, int iFrame) {
     FILE *pFile;
     char szFilename[32];
@@ -49,7 +52,7 @@ void SaveFrame(AVFrame *pFrame, int width, int height, int iFrame) {
 #pragma mark - Main function
 int main(int argc, char *argv[]) {
     AVFormatContext *pFormatCtx;
-    int             i, videoStreamIdx;
+    int             i, number_of_frames, number_of_packets, videoStreamIdx;
     AVCodecContext  *pCodecCtx;
     AVCodec         *pCodec;
     AVFrame         *pFrame;
@@ -142,24 +145,33 @@ int main(int argc, char *argv[]) {
     img_convert_ctx = sws_getContext(w, h, pCodecCtx->pix_fmt,
                                      w, h, AV_PIX_FMT_RGB24,
                                      SWS_BICUBIC, NULL, NULL, NULL);
-    // Read frames and save first five frames to disk
-    i=0;
-    while((av_read_frame(pFormatCtx, &packet)>=0) && (i<5)) {
+    // Read frames and save MAX_NUMBER_FRAMES frames to disk
+    number_of_frames=0;
+    number_of_packets=0;
+    while((av_read_frame(pFormatCtx, &packet)>=0)
+              && (number_of_frames<MAX_NUMBER_FRAMES)) {
         // Is this a packet from the video stream?
         if(packet.stream_index==videoStreamIdx) {
 
             /// Decode video frame
             //avcodec_decode_video(pCodecCtx, pFrame, &frameFinished,packet.data, packet.size);
             avcodec_decode_video2(pCodecCtx, pFrame, &frameFinished, &packet);
-
+            number_of_packets++;
             // Did we get a video frame?
             if(frameFinished) {
-                i++;
+                number_of_frames++;
                 sws_scale(img_convert_ctx, (const uint8_t * const *)pFrame->data,
                           pFrame->linesize, 0, pCodecCtx->height,
                           pFrameRGB->data, pFrameRGB->linesize);
-                SaveFrame(pFrameRGB, pCodecCtx->width, pCodecCtx->height, i);
+                SaveFrame(pFrameRGB, pCodecCtx->width, pCodecCtx->height, number_of_frames);
             }
+#ifdef PRINT_DEBUG_MESSAGES
+            printf("\n");
+            printf("number_of_frames    = %i\n", number_of_frames);
+            printf("framefinished       = %i\n", frameFinished);
+            printf("number_of_packets   = %i\n", number_of_packets);
+            printf("packet size         = %i\n", packet.size);
+#endif
         }
 
         // Free the packet that was allocated by av_read_frame
