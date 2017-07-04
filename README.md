@@ -51,3 +51,8 @@ LDLIBS := $(shell sdl-config --libs) $(LDLIBS)
 ```
 
 Now the Makefile should work provided you installed everything as above and built the right version of ffmpeg. I decided to do things this way since ffmpeg is a fast moving project and I have on my system several versions of it. This particular version uses SDL1.2. Several versions latter from the above one, ffmpeg switched over to SDL2. 
+
+Additional Notes 
+======================
+
+I have been working further on this tutorial but the modifications are found in my cl-autowrap repository in the `t-ffmpeg/tutoral` subdirectory. There I am updating the tutorial for now using a more recent version of ffmpeg. The version of ffmpeg I am using is in the subdirectory and I build it so all the libraries and include files are in the `t-ffmpeg/` tree. 
