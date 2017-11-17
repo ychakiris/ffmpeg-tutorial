@@ -4,39 +4,143 @@ FFmpeg-tutorial-samples
 Original code came from updated version of source code from http://dranger.com/ffmpeg/ffmpeg.html
 However, I could not get it to compile or work on my version of ffmpeg. Some changes were required. 
 
-Here is the version of ffmpeg I am using and the compiler flags used to build it.
-I replaced my true home directory with "my-home-directory."
+Matching up the proper version of ffmpeg is not easy.  Currently I am compiliing against ffmpeg-3.3. The build tree looks like the following:
+
+```
+.
+├── _archives
+│   ├── ffmpeg-3.3
+│   │   ├── ~
+│   │   ├── arch.mak
+│   │   ├── Changelog
+│   │   ├── cmdutils.c
+│   │   ├── cmdutils_common_opts.h
+│   │   ├── cmdutils.d
+│   │   ├── cmdutils.h
+│   │   ├── cmdutils.o
+│   │   ├── cmdutils_opencl.c
+│   │   ├── common.mak
+│   │   ├── compat
+│   │   ├── config.asm
+│   │   ├── config.fate
+│   │   ├── config.h
+│   │   ├── config.log
+│   │   ├── config.mak
+│   │   ├── configure
+│   │   ├── CONTRIBUTING.md
+│   │   ├── COPYING.GPLv2
+│   │   ├── COPYING.GPLv3
+│   │   ├── COPYING.LGPLv2.1
+│   │   ├── COPYING.LGPLv3
+│   │   ├── CREDITS
+│   │   ├── cscope.out
+│   │   ├── doc
+│   │   ├── erl.mak
+│   │   ├── ffmpeg
+│   │   ├── ffmpeg.c
+│   │   ├── ffmpeg_cuvid.c
+│   │   ├── ffmpeg_cuvid.d
+│   │   ├── ffmpeg_cuvid.o
+│   │   ├── ffmpeg.d
+│   │   ├── ffmpeg_dxva2.c
+│   │   ├── ffmpeg_filter.c
+│   │   ├── ffmpeg_filter.d
+│   │   ├── ffmpeg_filter.o
+│   │   ├── ffmpeg_g
+│   │   ├── ffmpeg.h
+│   │   ├── ffmpeg.o
+│   │   ├── ffmpeg_opt.c
+│   │   ├── ffmpeg_opt.d
+│   │   ├── ffmpeg_opt.o
+│   │   ├── ffmpeg_qsv.c
+│   │   ├── ffmpeg_vaapi.c
+│   │   ├── ffmpeg_vdpau.c
+│   │   ├── ffmpeg_videotoolbox.c
+│   │   ├── ffplay
+│   │   ├── ffplay.c
+│   │   ├── ffplay.d
+│   │   ├── ffplay_erl
+│   │   ├── ffplay_erl.c
+│   │   ├── ffplay_erl.d
+│   │   ├── ffplay_erl_g
+│   │   ├── ffplay_erl.o
+│   │   ├── ffplay_g
+│   │   ├── ffplay.o
+│   │   ├── ffprobe
+│   │   ├── ffprobe.c
+│   │   ├── ffprobe.d
+│   │   ├── ffprobe_g
+│   │   ├── ffprobe.o
+│   │   ├── ffserver
+│   │   ├── ffserver.c
+│   │   ├── ffserver_config.c
+│   │   ├── ffserver_config.d
+│   │   ├── ffserver_config.h
+│   │   ├── ffserver_config.o
+│   │   ├── ffserver.d
+│   │   ├── ffserver_g
+│   │   ├── ffserver.o
+│   │   ├── INSTALL.md
+│   │   ├── libavcodec
+│   │   ├── libavdevice
+│   │   ├── libavfilter
+│   │   ├── libavformat
+│   │   ├── libavresample
+│   │   ├── libavutil
+│   │   ├── libpostproc
+│   │   ├── library.mak
+│   │   ├── libswresample
+│   │   ├── libswscale
+│   │   ├── LICENSE.md
+│   │   ├── MAINTAINERS
+│   │   ├── Makefile
+│   │   ├── presets
+│   │   ├── README.md
+│   │   ├── RELEASE
+│   │   ├── RELEASE_NOTES
+│   │   ├── tests
+│   │   ├── tools
+│   │   ├── VERSION
+│   │   └── version.sh
+│   └── ffmpeg-3.3.tar.bz2
+├── _build
+│   ├─ bin
+│   │   ├── ffmpeg
+│   │   ├── ffplay
+│   │   ├── ffplay_erl
+│   │   ├── ffprobe
+│   │   └── ffserver
+│   ├── include
+│   │   ├── libavcodec
+│   │   ├── libavdevice
+│   │   ├── libavfilter
+│   │   ├── libavformat
+│   │   ├── libavutil
+│   │   ├── libswresample
+│   │   └── libswscale
+│   ├── lib
+│   │   ├── libavcodec.a
+│   │   ├── libavdevice.a
+│   │   ├── libavfilter.a
+│   │   ├── libavformat.a
+│   │   ├── libavutil.a
+│   │   ├── libswresample.a
+│   │   ├── libswscale.a
+│   │   └── pkgconfig
+│   └── share
+│       ├── ffmpeg
+│       └── man
+├── Makefile
+├── README.md
+├── test_data
+│   └── centaur_1.mpg
+├── tutorial01.c
+├── tutorial02.c
+├── tutorial03.c
+├── tutorial04.c
+├── tutorial05.c
+├── tutorial06.c
+└── tutorial07.c
 
 
 ```
-
-ffmpeg version N-78176-gb340bd8 Copyright (c) 2000-2016 the FFmpeg developers
-  built with gcc 4.8 (Ubuntu 4.8.4-2ubuntu1~14.04)
-  configuration: --prefix=/home/my-home-directory/ffmpeg_build --pkg-config-flags=--static --extra-cflags=-I/home/my-home-directory/ffmpeg_build/include --extra-ldflags=-L/home/my-home-directory/ffmpeg_build/lib --bindir=/home/my-home-directory/bin --enable-gpl --enable-libass --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-nonfree
-  libavutil      55. 16.100 / 55. 16.100
-  libavcodec     57. 22.102 / 57. 22.102
-  libavformat    57. 23.100 / 57. 23.100
-  libavdevice    57.  0.100 / 57.  0.100
-  libavfilter     6. 27.100 /  6. 27.100
-  libswscale      4.  0.100 /  4.  0.100
-  libswresample   2.  0.101 /  2.  0.101
-  libpostproc    54.  0.100 / 54.  0.100 
-
-```
-
-I am gradually changing it so all the lessons can compile and work with this version of ffmpeg. There are still a number of compiler warnings about the use of depreciated functions. The Makefile is still a bit primitive. You will have to change it by hand to compiler each lesson. I believe I have fixed only lessons 1-3. Lesson 1 works when used on an mpg video file. 
-
-To get things to compile, using the present Makefile, you will also have to change the PKG_CONFIG_PATH, so that pkg-config will be able to find the *.pc files that come with the ffmpeg build. They are found in the lib subdirectory. First check it by:
-
-```
-env | grep PKG_CONFIG_PATH
-
-```
-If a path to /home/my-home-directory/ffmpeg_build/lib/pkgconfig does not appear then you need to add it as follows:
-
-```
-export PKG_CONFIG_PATH=/home/my-home-directory/ffmpeg_build/lib/pkgconfig:$PKG_CONFIG_PATH
-
-```
-
-Now the Makefile should work provided you installed everything as above and built the right version of ffmpeg. I decided to do things this way since ffmpeg is a fast moving project and I have on my system several versions of it. This particular version uses SDL1.2. Several versions latter from the above one, ffmpeg switched over to SDL2. 
