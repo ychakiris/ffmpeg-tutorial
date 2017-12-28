@@ -9,17 +9,17 @@ FFMPEG_LIBS=    libavdevice                        \
 
 NVIDIA_LIBS=    nppi-7.5 nppc-7.5
 
-PKG_CONFIG_DIR= _build/lib/pkgconfig:/usr/local/cuda/pkgconfig 
-CFLAGS += -Wall -O2 -g -ggdb
-CFLAGS += $(shell export PKG_CONFIG_PATH=$(PKG_CONFIG_DIR); pkg-config --cflags $(FFMPEG_LIBS)) $(CFLAGS)
-CFLAGS += $(shell export PKG_CONFIG_PATH=$(PKG_CONFIG_DIR); pkg-config --cflags $(NVIDIA_LIBS)) $(CFLAGS)
-CFLAGS += $(shell freetype-config --cflags) $(CFLAGS)
-CFLAGS += $(shell sdl2-config --cflags) $(CFLAGS)
+PKG_CONFIG_DIR= _build/lib/pkgconfig:/usr/local/cuda-7.5/pkgconfig 
+CFLAGS := -Wall -O2 -g -ggdb 
+CFLAGS += $(shell export PKG_CONFIG_PATH=$(PKG_CONFIG_DIR); pkg-config --cflags $(FFMPEG_LIBS))
+CFLAGS += $(shell export PKG_CONFIG_PATH=$(PKG_CONFIG_DIR); pkg-config --cflags $(NVIDIA_LIBS)) 
+CFLAGS += $(shell freetype-config --cflags)
+CFLAGS += $(shell sdl2-config --cflags) 
 
-LDLIBS := $(shell export PKG_CONFIG_PATH=$(PKG_CONFIG_DIR); pkg-config --libs $(FFMPEG_LIBS)) $(LDLIBS)
-LDLIBS += $(shell export PKG_CONFIG_PATH=$(PKG_CONFIG_DIR); pkg-config --libs $(NVIDIA_LIBS)) $(LDLIBS)
-LDLIBS += $(shell freetype-config --libs) $(LDLIBS)
-LDLIBS += $(shell sdl2-config --libs) $(LDLIBS)
+LDLIBS := $(shell export PKG_CONFIG_PATH=$(PKG_CONFIG_DIR); pkg-config --libs $(FFMPEG_LIBS)) 
+LDLIBS += $(shell export PKG_CONFIG_PATH=$(PKG_CONFIG_DIR); pkg-config --libs $(NVIDIA_LIBS)) 
+LDLIBS += $(shell freetype-config --libs) 
+LDLIBS += $(shell sdl2-config --libs)
 
 EXAMPLES=        tutorial01                         \
 #                tutorial02                         \
